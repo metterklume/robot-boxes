@@ -6,6 +6,8 @@
 
 ## MALAI Challenge - Dots and Boxes
 
+(Run and modify code in this [notebook](Readme.ipynb))
+
 In [Dots and Boxes](https://en.wikipedia.org/wiki/Dots_and_boxes) two players alternately draw short horizontal or vertical lines on a grid.
 When a player completes a box, they get another turn. 
 
