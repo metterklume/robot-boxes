@@ -1,5 +1,5 @@
 """
-Created on Mon Oct 12 14:30:00 2020
+Created on Sun Mar 25 14:30:00 2023
 
 @author: abhishekroy
 """
@@ -153,7 +153,7 @@ def isvalidmove(board:Board, move:List[Line])->bool:
     return True
 
 
-def makemove(board:Board, move:List[Line], player:Literal["red","blue"], 
+def makemove(board:Board, move:List[Line], player:Literal[0,1], 
              copyboard=True, checkmove=True)->Board:
     """
     Make a move i.e. add its line(s) to the board.
