@@ -123,7 +123,7 @@ def isvalidboard(board:Board)->bool:
 
 def isvalidmove(board:Board, move:List[Line])->bool:
     """
-    Checks validity of a move. A move is a list of lines made a player
+    Checks validity of a move. A move is a list of lines made by a player
     in his/her turn.
 
     If a line creates a filled box then there must a next line and so on, 
@@ -133,6 +133,15 @@ def isvalidmove(board:Board, move:List[Line])->bool:
     #A move is empty iff there are no more lines to made
     if not move and len(board.lines) < 2*n*(n+1):
         return False
+    
+    #All lines in the move are between neighbouring points only.
+    if not all((
+                0<=i<=n and 0<=j<=n and 0<=r<=n and 0<=s<=n and\
+                abs(i-j)+abs(r-s) == 1 \
+                    for (i,j,r,s) in move
+                )):
+        return False
+
     #No repeated lines 
     if any((line in board.lines for line in move)) or\
         len(set(move)) != len(move):
