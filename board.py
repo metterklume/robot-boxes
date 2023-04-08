@@ -137,7 +137,7 @@ def isvalidmove(board:Board, move:List[Line])->bool:
     #All lines in the move are between neighbouring points only.
     if not all((
                 0<=i<=n and 0<=j<=n and 0<=r<=n and 0<=s<=n and\
-                abs(i-j)+abs(r-s) == 1 \
+                abs(i-r)+abs(j-s) == 1 \
                     for (i,j,r,s) in move
                 )):
         return False
@@ -166,6 +166,9 @@ def makemove(board:Board, move:List[Line], player:Literal[0,1],
              copyboard=True, checkmove=True)->Board:
     """
     Make a move i.e. add its line(s) to the board.
+    *player* = 0 (red = first player)
+             = 1 (blue = second player)
+             needs to be given to add the tally in board.red(blue)boxes
     Returns a new board or changes board directly based on *copyboard*.
     """
     if copyboard:
@@ -178,7 +181,7 @@ def makemove(board:Board, move:List[Line], player:Literal[0,1],
     board.lines += move
     new_boxes = getboxes(board)
     added_boxes = [b for b in new_boxes if b not in old_boxes]
-    if player == "red":
+    if player == 0:
         board.red_boxes += added_boxes
     else:
         board.blue_boxes += added_boxes
