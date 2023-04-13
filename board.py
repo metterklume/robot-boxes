@@ -200,3 +200,57 @@ def get_all_lines(n:int)->List[Line]:
     
     all_lines = [(min(i,r),min(j,s),max(i,r),max(j,s)) for (i,j,r,s) in all_lines]
     return all_lines
+
+
+def game(robot1, robot2, size)->List[Board]:
+    """
+    Plays a game between robot1 (starting first) and robot2
+    on a board with *size* boxes on each side.
+
+    Returns list of boards, from the starting position to the final.
+    """
+    b = Board(size=size, lines=[])
+    board_list = [b]
+    player = 0
+    m = (robot1,robot2)[player](b)
+    
+    while m:
+        b = makemove(b,m,player)
+        board_list += [b]
+        player = 1-player
+        m = (robot1,robot2)[player](b)
+
+    print(f"Red {len(b.red_boxes)}, Blue {len(b.blue_boxes)}")
+    
+    return board_list
+
+
+def match(robot1, robot2, size, ngames=1):
+    """
+    Plays a series of *ngames* games between robot1 and robot2.
+    The first player switches after every game
+
+    Returns (score1, score2, wins1, wins2) 
+    where score_ is the cumulative number of boxes over all games
+    and wins_ is the number of wins.
+    Tied games are not counted as wins for either side.
+    """
+    score1, score2 = 0,0
+    wins1, wins2 = 0,0
+    for i in range(ngames):
+        parity = i%2
+        r1, r2 = (robot1, robot2)[parity], (robot1, robot2)[1-parity]
+        print(r1.__name__, r2.__name__)
+        bl = game(r1, r2, size)
+        lastboard = bl[-1]
+        red, blue = len(lastboard.red_boxes), len(lastboard.blue_boxes)
+        
+        if parity:
+            red, blue = blue, red
+        score1 += red
+        score2 += blue
+        wins1 += red > blue
+        wins2 += blue > red
+    
+    print(f"{score1=} {score2=}")
+    return (score1, score2, wins1, wins2)
