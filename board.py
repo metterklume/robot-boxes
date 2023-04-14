@@ -36,7 +36,7 @@ class Board:
 
     def __copy__(self):
         return Board(size=self.size,lines=copy(self.lines),red_boxes=copy(self.red_boxes),
-                     blue_boxes=self.blue_boxes)
+                     blue_boxes=copy(self.blue_boxes))
 
 
 def getboxes(board:Board)->List[Box]:
